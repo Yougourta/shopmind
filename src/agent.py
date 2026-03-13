@@ -39,11 +39,11 @@ def format_response(state: ShopMindState) -> ShopMindState:
 # --- Routing functions ---
 
 def should_continue_profiling(state: ShopMindState) -> str:
-    pass
+    return "search_products" if state["user_profile"] and state["user_profile"].user_profile_complete() else "gather_requirements"
 
 
 def should_continue_search(state: ShopMindState) -> str:
-    pass
+    return "build_rag_context" if len(state["search_results"]) >= 5 or state["iterations"] >= 5 else "search_products"
 
 
 # --- Graph builder ---
