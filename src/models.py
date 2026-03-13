@@ -9,6 +9,7 @@ class UserProfile(BaseModel):
     car_trunk: bool | None = None
     public_transport: bool | None = None
     priority: Literal['weight', 'comfort', 'price', 'durability'] | None = None
+    country: str | None = None
 
     def user_profile_complete(self) -> bool:
         return all([
