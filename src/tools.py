@@ -8,6 +8,7 @@ from config import TAVILY_API_KEY, TAVILY_MAX_RESULTS, CHROMA_PERSIST_DIR, CHROM
 
 _tavily_client = TavilyClient(api_key=TAVILY_API_KEY)
 _chroma_client = chromadb.PersistentClient(path=CHROMA_PERSIST_DIR)
+_chromadb_collection = _chroma_client.get_or_create_collection(name=CHROMA_COLLECTION_NAME)
 
 def get_tavily_client() -> TavilyClient:
     return _tavily_client
@@ -16,7 +17,7 @@ def get_chromadb_client() -> chromadb.PersistentClient:
     return _chroma_client
 
 def get_chromadb_collection() -> chromadb.Collection:
-    return _chroma_client.get_or_create_collection(name=CHROMA_COLLECTION_NAME)
+    return _chromadb_collection
 
 @tool
 def search_web(query: str) -> list[dict] | None:
