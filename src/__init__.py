@@ -1,1 +1,0 @@
-"""ShopMind source package."""

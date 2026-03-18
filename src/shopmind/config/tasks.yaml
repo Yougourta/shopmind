@@ -1,0 +1,5 @@
+researcher_task:
+  description: Research the web for the best 10 strollers in France for march 2026. Make sure to check the price, availability, and features of each stroller.
+  expected_output: A list of 10 Stroller objects in a JSON format.
+  agent: researcher_agent
+  output_file: data/seed_strollers.json

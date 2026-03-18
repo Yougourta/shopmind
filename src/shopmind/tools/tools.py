@@ -2,9 +2,9 @@
 
 import chromadb
 
-from langchain_core.tools import tool
+from crewai.tools import tool
 from tavily import TavilyClient
-from config import TAVILY_API_KEY, TAVILY_MAX_RESULTS, CHROMA_PERSIST_DIR, CHROMA_COLLECTION_NAME
+from shopmind.config import TAVILY_API_KEY, TAVILY_MAX_RESULTS, CHROMA_PERSIST_DIR, CHROMA_COLLECTION_NAME
 
 _tavily_client = TavilyClient(api_key=TAVILY_API_KEY)
 _chroma_client = chromadb.PersistentClient(path=CHROMA_PERSIST_DIR)
