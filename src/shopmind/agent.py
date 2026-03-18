@@ -1,44 +1,8 @@
-"""LangGraph crew graph definition and execution."""
+"""LangGraph agent graph definition and execution."""
 
 from typing import TypedDict
 from langgraph.graph import StateGraph, START, END
-from shopmind.models import UserProfile, Stroller, StrollerList
-from shopmind.config import MODEL
-from shopmind.tools.tools import search_web, search_kb, save_kb
-from crewai import Agent, Task, Crew, Process
-from crewai.project import CrewBase, agent, task, crew
-from crewai.agents.agent_builder.base_agent import BaseAgent
-
-@CrewBase
-class ShopMindCrew:
-    agents_config = 'config/agents.yaml'
-    tasks_config = 'config/tasks.yaml'
-
-    agents: list[BaseAgent]
-    tasks: list[Task]
-
-    @agent
-    def researcher_agent(self) -> Agent:
-        return Agent(
-            config=self.agents_config["researcher_agent"], 
-            tools=[search_web]
-        )
-
-    @task
-    def researcher_task(self) -> Task:
-        return Task(
-            config=self.tasks_config["researcher_task"],
-            output_pydantic=StrollerList
-        )
-
-    @crew
-    def shopmind_crew(self) -> Crew:
-        return Crew(
-            agents=self.agents,
-            tasks=self.tasks,
-            process=Process.sequential,
-            verbose=True
-        )
+from shopmind.models import UserProfile
 
 class ShopMindState(TypedDict):
     messages: list[dict]        # Conversation history

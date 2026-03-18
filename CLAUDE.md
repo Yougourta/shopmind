@@ -18,3 +18,6 @@ When the project takes shape, update this file with:
 - How to run tests (e.g., `pytest` or `python -m pytest tests/`)
 - Any linting/formatting commands
 - High-level architecture notes
+
+## Requirements
+Never add a co-author to the git commit.

@@ -1,5 +1,6 @@
 import asyncio
-from shopmind.crew import ShopMindState, run_agent, ShopMindCrew
+from shopmind.agent import ShopMindState, run_agent
+from shopmind.seeder import SeedCrew
 
 def main():
     # initial_state = ShopMindState(
@@ -13,7 +14,7 @@ def main():
     # result = asyncio.run(run_agent(initial_state))
     # print(result)
 
-    ShopMindCrew().shopmind_crew().kickoff()
+    SeederCrew().shopmind_crew().kickoff()
 
 if __name__ == "__main__":
     main()
