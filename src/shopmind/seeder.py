@@ -9,8 +9,8 @@ from shopmind.tools.tools import search_web
 
 @CrewBase
 class SeederCrew:
-    agents_config = 'config/agents.yaml'
-    tasks_config = 'config/tasks.yaml'
+    agents_config = 'config/seed_agents.yaml'
+    tasks_config = 'config/seed_tasks.yaml'
 
     agents: list[BaseAgent]
     tasks: list[Task]

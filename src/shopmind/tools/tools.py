@@ -2,13 +2,15 @@
 
 import chromadb
 
-from crewai.tools import tool
+from openai import OpenAI, AsyncOpenAI
+from langchain_core.tools import tool
 from tavily import TavilyClient
-from shopmind.config import TAVILY_API_KEY, TAVILY_MAX_RESULTS, CHROMA_PERSIST_DIR, CHROMA_COLLECTION_NAME
+from shopmind.config import TAVILY_API_KEY, TAVILY_MAX_RESULTS, CHROMA_PERSIST_DIR, CHROMA_COLLECTION_NAME, OPENAI_API_KEY
 
 _tavily_client = TavilyClient(api_key=TAVILY_API_KEY)
 _chroma_client = chromadb.PersistentClient(path=CHROMA_PERSIST_DIR)
 _chromadb_collection = _chroma_client.get_or_create_collection(name=CHROMA_COLLECTION_NAME)
+_openai_async_client = AsyncOpenAI(api_key=OPENAI_API_KEY)
 
 def get_tavily_client() -> TavilyClient:
     return _tavily_client
@@ -18,6 +20,9 @@ def get_chromadb_client() -> chromadb.PersistentClient:
 
 def get_chromadb_collection() -> chromadb.Collection:
     return _chromadb_collection
+
+def get_openai_async_client() -> AsyncOpenAI:
+    return _openai_async_client
 
 @tool
 def search_web(query: str) -> list[dict] | None:

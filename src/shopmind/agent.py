@@ -1,8 +1,10 @@
 """LangGraph agent graph definition and execution."""
-
+import json
 from typing import TypedDict
 from langgraph.graph import StateGraph, START, END
 from shopmind.models import UserProfile
+from shopmind.config import load_prompt, MODEL
+from shopmind.tools.tools import get_openai_async_client
 
 class ShopMindState(TypedDict):
     messages: list[dict]        # Conversation history
@@ -14,8 +16,22 @@ class ShopMindState(TypedDict):
 
 # --- Node functions ---
 
-def gather_requirements(state: ShopMindState) -> ShopMindState:
-    pass
+async def gather_requirements(state: ShopMindState) -> ShopMindState:
+    client = get_openai_async_client()
+    system_prompt = load_prompt("profiling")
+    llm_response = await client.chat.completions.create(
+        model=MODEL,
+        messages=[
+            {"role": "system", "content": system_prompt},
+            *state["messages"]
+        ]
+    )
+
+    try:
+        data = json.loads(llm_response.choices[0].message.content)
+        return {"user_profile": UserProfile(**data)}
+    except json.JSONDecodeError:
+        return {"messages": state["messages"] + [{"role": "assistant", "content": llm_response.choices[0].message.content}]}
 
 def search_products(state: ShopMindState) -> ShopMindState:
     pass
