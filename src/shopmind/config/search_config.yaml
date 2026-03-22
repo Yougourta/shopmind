@@ -1,0 +1,9 @@
+query_templates:
+  budget: "poussette budget {budget_max}€"
+  age: "enfant {children_ages_months} mois"
+  usage: "{usage}"
+  car_trunk: "compacte coffre voiture"
+  public_transport: "transport en commun métro"
+  staircase: "légère escaliers sans ascenseur"
+  priority: "{priority}"
+  country: "disponible {country}"

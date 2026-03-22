@@ -3,6 +3,7 @@
 from pydantic import BaseModel
 from typing import Literal
 from datetime import datetime
+from shopmind.config import load_prompt
 
 # Shared type alias — used in both UserProfile and Stroller
 TerrainType = Literal['city', 'travel', 'off_road', 'jogging']
@@ -30,6 +31,20 @@ class UserProfile(BaseModel):
             self.children_ages_months is not None,
             self.usage is not None
         ])
+
+    def to_search_query(self) -> str:
+        templates = load_prompt("search_config.yaml")["query_templates"]
+        criteria = [
+            templates["budget"].format(budget_max=self.budget_max),
+            templates["age"].format(children_ages_months=self.children_ages_months),
+            templates["usage"].format(usage=self.usage),
+            templates["car_trunk"] if self.car_trunk else "",
+            templates["public_transport"] if self.public_transport else "",
+            templates["staircase"] if self.staircase else "",
+            templates["country"].format(country=self.country) if self.country else "",
+            templates["priority"].format(priority=self.priority) if self.priority else ""
+        ]
+        return " ".join(criteria)   
 
 
 class PriceRecord(BaseModel):
@@ -87,3 +102,8 @@ class StrollerList(BaseModel):
     strollers: list[Stroller]
     scraped_at: str | None = None   # ISO datetime string
     market: str | None = None
+
+class SearchResult(BaseModel):
+    source: Literal['kb', 'web']
+    content: str
+    metadata: dict | None = None

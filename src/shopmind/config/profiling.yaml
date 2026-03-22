@@ -18,8 +18,9 @@ output_format:
     Respond with a natural, friendly question in the user's language
     to gather the missing information. Do NOT output JSON.
   complete_profile: >
-    Output a valid JSON object matching the UserProfile schema.
-    No markdown, no explanation.
+    Output ONLY the raw JSON object. No introduction, no explanation, 
+    no markdown. The response must start with { and end with }.
+    Literal attributes values must be in english and must match the values in the example_output.
 
 required_fields:
   - budget_max
@@ -34,3 +35,14 @@ optional_fields:
   - priority
   - preferred_brands
   - country
+
+example_output:
+  budget_min: 200
+  budget_max: 550
+  children_ages_months: [4]
+  usage: ["city", "travel"]
+  car_trunk: true
+  public_transport: false
+  staircase: true
+  priority: "weight"
+  country: "FR"

@@ -15,3 +15,8 @@ console_handler.setFormatter(formatter)
 
 # Add handlers to logger
 logger.addHandler(console_handler)
+
+# Suppress verbose logs from libraries
+logging.getLogger("httpx").setLevel(logging.WARNING)
+logging.getLogger("anthropic").setLevel(logging.WARNING)
+logging.getLogger("openai").setLevel(logging.WARNING)
